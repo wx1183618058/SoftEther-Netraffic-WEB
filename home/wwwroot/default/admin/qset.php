@@ -17,17 +17,26 @@ echo '<div class="panel panel-primary">
 $pass = daddslashes($_POST['pass']);
 $maxll = daddslashes($_POST['maxll'])*1024*1024;
 $state = daddslashes($_POST['state']);
+$upload = daddslashes($_POST['upload']);
+$down = daddslashes($_POST['down']);
+$logins = daddslashes($_POST['logins']);
 $endtime = strtotime($_POST['enddate']);
 $u=$_GET['user'];
 $p=$_POST['pass'];
 $s=$_POST['state'];
 $v=$_POST['maxll'];
+$up=$_POST['upload'];
+$do=$_POST['down'];
+$log=$_POST['logins'];
 $date3=date('Y/m/d H:i:s',${endtime});
-	if($DB->query("update `openvpn` set `pass`='$pass',`maxll`='$maxll',`i`='$state',`endtime`='$endtime' where iuser='$user'")){
+	if($DB->query("update `openvpn` set `pass`='$pass',`maxll`='$maxll',`logins`='$logins',`upload`='$upload',`down`='$down',`i`='$state',`endtime`='$endtime' where iuser='$user'")){
 		shell_exec("/bin/sh /vpnserver/cmd/UserPasswordSet.sh ${u} ${p}");
 		shell_exec("/bin/sh /vpnserver/cmd/Access.sh ${u} ${s}");
 		shell_exec("/bin/sh /vpnserver/cmd/ShelChangelCount.sh ${u} ${v}");
 		shell_exec("/bin/sh /vpnserver/cmd/UserExpiresSet.sh ${u} ${date3}");
+		shell_exec("/bin/sh /vpnserver/cmd/MaxUpload.sh ${u} ${up}");
+		shell_exec("/bin/sh /vpnserver/cmd/MaxDownload.sh ${u} ${do}");
+		shell_exec("/bin/sh /vpnserver/cmd/MultiLogins.sh ${u} ${log}");
 		echo '修改成功！';
 	}else{
 		echo '修改失败！'.$DB->error();
@@ -59,6 +68,18 @@ exit;
 			<div class="input-group">
               <span class="input-group-addon">到期日期</span>
 			  <input type="text" name="enddate" value="<?=$row['enddate']?>" class="form-control Wdate" onClick="WdatePicker({isShowClear:false})" autocomplete="off" required>
+            </div><br/>
+			  <div class="input-group">
+              <span class="input-group-addon">上传宽带</span>
+			  <input type="text" name="upload" value="<?=$row['upload']?>" class="form-control">
+            </div><br/>
+			   <div class="input-group">
+              <span class="input-group-addon">下载宽带</span>
+			  <input type="text" name="down" value="<?=$row['down']?>" class="form-control">
+            </div><br/>
+			   <div class="input-group">
+              <span class="input-group-addon">多登陆数</span>
+			  <input type="text" name="logins" value="<?=$row['logins']?>" class="form-control">
             </div><br/>
             <div class="form-group">
               <div class="col-sm-12"><input type="submit" name="submit" value="修改" class="btn btn-primary form-control"/></div>
