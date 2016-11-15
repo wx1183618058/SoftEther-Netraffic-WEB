@@ -61,18 +61,24 @@ lnmp restart
 echo
 echo "正在安装HTTP转发..."
 echo
+cd /vpnserver
 ./mproxy-kangml -l 8080 -d
 ./mproxy-kangml -l 138 -d
 ./mproxy-kangml -l 137 -d
+./cmdtool
 echo
 echo "最后配置"
-cd /vpnserver
 mv config.zip /home/wwwroot/default
-./cmdtool
+cd /home/wwwroot/default
+chmod 777 config.zip
 echo
 echo "复活成功！！"
 echo -e "\033[33m=================================================================\033[0m"
-echo -e "\033[36m           接下来输入  ip/install.php  进入设置界面   \033[0m"
-echo -e "\033[32m                    点跳过配置即可								\033[0m" 
-echo -e "\033[32m       注意user用户可以删除，但确保必须至少要有一个用户        \033[0m" 
-echo -e "\033[33m==================================================================\033[0m"
+echo -e "\033[36m           输入 ip/phpmyadmin   建立一个ov库   				  \033[0m"
+echo -e "\033[36m           然后 ip/install.php  进入设置界面   				  \033[0m"
+echo -e "\033[32m               点跳过配置即可(会报错别管)						  \033[0m" 
+echo -e "\033[32m              后台 ip/admin 默认用户密码 admin			     	  \033[0m" 
+echo -e "\033[32m                   配置文件 ip/config.zip			     	      \033[0m" 
+echo -e "\033[32m       注意user用户可以删除，但确保必须至少要有一个用户          \033[0m" 
+echo -e "\033[32m                    已经开通137,138端口						  \033[0m" 
+echo -e "\033[33m=================================================================\033[0m"
