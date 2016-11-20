@@ -1,0 +1,17 @@
+@charset "utf-8";
+body,html{
+	font-family:"Î¢ÈíÑÅºÚ";font-size:12px;color:#333;
+	padding:0px;
+	margin:0px;
+	width:100%;
+	overflow-x:hidden;
+	background:#ccc;
+}
+*{
+	line-height:25px;
+}
+.main{
+	padding:0;
+	margin:10px;
+	background:#fff;
+}
