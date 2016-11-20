@@ -18,8 +18,8 @@ SoftEther WEB端BLG流控
 cd / && wget https://raw.githubusercontent.com/wx1183618058/SoftEther-Netraffic-BLG/master/web.sh && chmod 777 web.sh && ./web.sh
 ```
 
-![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/1.png)
-![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/2.png)
-![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/3.png)
-![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/4.png)
-![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/5.png)
+![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/1.PNG)
+![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/2.PNG)
+![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/3.PNG)
+![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/4.PNG)
+![image](https://github.com/wx1183618058/SoftEther-Netraffic-BLG/blob/master/5.PNG)
