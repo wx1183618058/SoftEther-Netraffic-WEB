@@ -23,7 +23,12 @@ if($get == "test"){
 	@unlink($file);
 	$rand = true;
 }
-
+$steat=exec("ps -e | grep cmdtool");
+if(!empty(${steat})) {
+	$steat=1;
+} else {
+	$steat=0;
+}
 $file = R."/user_tmp/gg_read/test.txt";
 file_put_contents($file,$conetnt);
 $get = @file_get_contents($file);
@@ -71,15 +76,18 @@ foreach($v as $t){
 		<li class="list-group-item">
 			<b>服务器软件：</b><?php echo $_SERVER['SERVER_SOFTWARE'] ?>
 		</li>
-		
+	</ul>
+</div>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">监控信息</h3>
+	</div>
+	<ul class="list-group">
 		<li class="list-group-item">
-			<b>程序最大运行时间：</b><?php echo ini_get('max_execution_time') ?>s
+			<b>CmdTool版本：</b><?php echo "1.0";?>
 		</li>
 		<li class="list-group-item">
-			<b>POST许可：</b><?php echo ini_get('post_max_size'); ?>
-		</li>
-		<li class="list-group-item">
-			<b>文件上传许可：</b><?php echo ini_get('upload_max_filesize'); ?>
+			<b>运行状态：</b><?php echo $steat ? "正在运行" : "已经停止";?>
 		</li>
 	</ul>
 </div>
