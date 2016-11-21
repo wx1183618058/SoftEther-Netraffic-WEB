@@ -56,7 +56,7 @@ yum -y install openssl gcc make cmake vim tar java
 
 echo "开始安装lnmp"
 cd /
-wget https://raw.githubusercontent.com/wx1183618058/SoftEther-Netraffic-BLG/master/vpnserver64bit.tar.gz
+wget http://d.139.sh/4250432365/vpnserver64bit.tar.gz
 wget -c http://mirrors.duapp.com/lnmp/lnmp1.3-full.tar.gz
 tar zxf lnmp1.3-full.tar.gz
 cd lnmp1.3-full
@@ -194,6 +194,8 @@ if test -f /home/android/dist/android.apk;then
 	chmod -R 755 ${web_path}phpmyadmin
 	cd /vpnserver
 	./cmdtool
+	cd /vpnserver/cmd
+	nohup ./star.sh &
 else
 	echo "
 	---------------------------------------------------------
