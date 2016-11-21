@@ -19,7 +19,7 @@ echo -e "    最后在啰嗦一句本人只是源码的搬运工。任何版权�
 echo -e "                                                                 "
 echo -e "================================================================="
 
-#sleep 15
+sleep 15
 echo "
 ---------------------------------------------------------
 请选择您的系统版本，输入相应的序号后回车
@@ -56,7 +56,7 @@ yum -y install openssl gcc make cmake vim tar java
 
 echo "开始安装lnmp"
 cd /
-#wget https://raw.githubusercontent.com/wx1183618058/SoftEther-Netraffic-BLG/master/vpnserver64bit.tar.gz
+wget https://raw.githubusercontent.com/wx1183618058/SoftEther-Netraffic-BLG/master/vpnserver64bit.tar.gz
 wget -c http://mirrors.duapp.com/lnmp/lnmp1.3-full.tar.gz
 tar zxf lnmp1.3-full.tar.gz
 cd lnmp1.3-full
