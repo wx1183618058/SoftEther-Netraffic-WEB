@@ -81,13 +81,13 @@ cd /vpnserver
 1
 EOF
 ./vpnserver start
-sleep(1)
+sleep 1
 /vpnserver/cmd/ListenerCreate.sh
 ./vpnserver stop
-sleep(1)
+sleep 1
 /vpnserver/cmd/Change.sh
 ./vpnserver start
-sleep(1)
+sleep 1
 /vpnserver/cmd/SecureNatEnable.sh
 
 echo "开始安装web"
