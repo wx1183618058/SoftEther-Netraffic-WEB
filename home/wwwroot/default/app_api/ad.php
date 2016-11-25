@@ -23,6 +23,29 @@ if(isset($_POST['km'])){
 		$update["dlid"] = $myrow['daili'];
 		$update[_i_] = "1";
 		if(db(_openvpn_)->where(array(_iuser_=>$u))->update($update)){
+				$res1=db("openvpn")->where(array("iuser"=>$u,"pass"=>$p))->find();
+				$endtime=$res1['endtime'];
+				//$date3=date('Y/m/d H:i:s',${duetime});
+				$date3=date('Y/m/d',${duetime});
+				$date4="${date3} 00:00:00";
+				$us=$res1['iuser'];
+				$pa=$res1['pass'];
+				$s=$res1['i'];
+				$v=$res1['maxll'];
+				$vs=${v}/1024/1024;
+				$up=$res1['upload'];
+				$do=$res1['down'];
+				$log=$res1['logins'];
+				shell_exec("/bin/sh /vpnserver/cmd/UserDelete.sh ${us}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserDeleteCount.sh ${us}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserCreate.sh {$us}");
+				shell_exec("/bin/sh /vpnserver/cmd/ShellCreateCount.sh ${us} ${vs}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserPasswordSet.sh ${us} ${pa}");
+				shell_exec("/bin/sh /vpnserver/cmd/Access.sh ${us} ${s}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserExpiresSet.sh ${us} ${date4}");
+				shell_exec("/bin/sh /vpnserver/cmd/MaxUpload.sh ${us} ${up}");
+				shell_exec("/bin/sh /vpnserver/cmd/MaxDownload.sh ${us} ${do}");
+				shell_exec("/bin/sh /vpnserver/cmd/MultiLogins.sh ${us} ${log}");
 			db("auth_kms")->where(array("id"=>$myrow['id']))->update(array("isuse"=>"1","user"=>$u,"usetime"=>date("Y-m-d H:i:s",time())));
 			die('开通成功！');
 		}else{

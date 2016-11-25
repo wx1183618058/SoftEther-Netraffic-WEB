@@ -84,7 +84,7 @@ foreach($v as $t){
 	</div>
 	<ul class="list-group">
 		<li class="list-group-item">
-			<b>CmdTool版本：</b><?php echo "1.0";?>
+			<b>CmdTool版本：</b><?php echo "1.1";?>
 		</li>
 		<li class="list-group-item">
 			<b>运行状态：</b><?php echo $steat ? "正在运行" : "已经停止";?>

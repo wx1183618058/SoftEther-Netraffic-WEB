@@ -19,27 +19,39 @@ if($_POST['km']){
 	}elseif($myrow['isuse']==1){
 		exit("<script language='javascript'>alert('此激活码已被使用');history.go(-1);</script>");
 	}else{
-		$duetime = ($res['endtime'] < time() ? time() : $res['endtime']) + $myrow['value']*24*60*60;
+		$duetime = time() + $myrow['value']*24*60*60;
 		$addll = $myrow['values']*1024*1024*1024;
-		if($res['endtime'] < time()){//已到期
 			$sql="update `openvpn` set `isent`='0',`irecv`='0',`maxll`='{$addll}',`endtime`='{$duetime}',`dlid`='{$myrow['daili']}',`i`='1' where `iuser`='{$u}' && `pass`='{$p}'";
 			if($DB->query($sql)){
-				$DB->query("update `auth_kms` set `isuse` ='1',`user` ='$u',`usetime` ='$date' where `id`='{$myrow['id']}'");
-				wlog('账号激活','用户'.$u.'使用激活码'.$km.'开通账号['.$date.']');
-				exit("<script language='javascript'>alert('开通成功！');history.go(-1);</script>");
-			}else{
-				exit("<script language='javascript'>alert('开通失败！');history.go(-1);</script>");
-			}
-		}else{
-			$sql="update `openvpn` set `maxll`=`maxll` + '{$addll}',`endtime`='{$duetime}',`dlid`='{$myrow['daili']}',`i`='1' where `iuser`='{$u}' && `pass`='{$p}'";
-			if($DB->query($sql)){
+				$res1=$DB->get_row("SELECT * FROM `openvpn` where `iuser`='$u' && `pass`='$p' limit 1");
+				$endtime=$res1['endtime'];
+				//$date3=date('Y/m/d H:i:s',${duetime});
+				$date3=date('Y/m/d',${duetime});
+				$date4="${date3} 00:00:00";
+				$u=$res1['iuser'];
+				$p=$res1['pass'];
+				$s=$res1['i'];
+				$v=$res1['maxll'];
+				$vs=${v}/1024/1024;
+				$up=$res1['upload'];
+				$do=$res1['down'];
+				$log=$res1['logins'];
+				shell_exec("/bin/sh /vpnserver/cmd/UserDelete.sh ${u}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserDeleteCount.sh ${u}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserCreate.sh {$u}");
+				shell_exec("/bin/sh /vpnserver/cmd/ShellCreateCount.sh ${u} ${vs}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserPasswordSet.sh ${u} ${p}");
+				shell_exec("/bin/sh /vpnserver/cmd/Access.sh ${u} ${s}");
+				shell_exec("/bin/sh /vpnserver/cmd/UserExpiresSet.sh ${u} ${date4}");
+				shell_exec("/bin/sh /vpnserver/cmd/MaxUpload.sh ${u} ${up}");
+				shell_exec("/bin/sh /vpnserver/cmd/MaxDownload.sh ${u} ${do}");
+				shell_exec("/bin/sh /vpnserver/cmd/MultiLogins.sh ${u} ${log}");
 				$DB->query("update `auth_kms` set `isuse` ='1',`user` ='$u',`usetime` ='$date' where `id`='{$myrow['id']}'");
 				wlog('账号激活','用户'.$u.'使用激活码'.$km.'续费账号['.$date.']');
 				exit("<script language='javascript'>alert('续费成功！');history.go(-1);</script>");
 			}else{
 				exit("<script language='javascript'>alert('续费失败！');history.go(-1);</script>");
 			}
-		}
 		//$duetime = ($res['endtime'] < time() ? time() : $res['endtime']) + $myrow['value']*24*60*60;
 		//$addll = ($res['endtime'] < time() ? $myrow['values'] : $res['endtime']) + $myrow['values'];
 		//$sql="update `openvpn` set `maxll`=`maxll` + '0',`endtime`='{$duetime}' where `iuser`='{$u}' && `pass`='{$p}'";
@@ -99,7 +111,7 @@ echo "MB</p><p>总量:".round($res['maxll']/1024/1024);
 echo "MB</p><p>剩余:".round(($res['maxll']-$res['isent']-$res['irecv'])/1024/1024);
 echo "MB</p><p>注册时间:".date('Y-m-d',$res['starttime']);
 echo "</p><p>到期时间:".date('Y-m-d',$res['endtime']);
-echo "</p><p>到期时间:".round(($res['endtime']-$res['starttime'])/86400)."天";
+echo "</p><p>到期时间:".round(($res['endtime']-time())/86400)."天";
 echo "</p><p>1.流量有效期以到期时间为准。<br />2.如果流量数据没有更新请断开VPN连接重新查询！</p>";
 ?>
 		<form action="" method="POST" class="form-inline">
@@ -110,6 +122,13 @@ echo "</p><p>1.流量有效期以到期时间为准。<br />2.如果流量数据
         </div>
         <button type="submit" class="btn btn-primary">确认</button>
         </form>
+		<form action="" method="POST" class="form-inline">
+		<div class="form-group">
+		<label>激活/续费账号</label>
+		<input type="text" class="form-control" name="km" placeholder="请输入激活码卡密">
+		</div>
+		<button type="submit" class="btn btn-primary">确认</button>
+		</form>
 		<br>
         <span class="glyphicon glyphicon-info-sign">公告:<br><?php echo $gonggao;?></span> <br> <br>
 		<br>

@@ -32,10 +32,17 @@
 			  <li><a href="./online.php">在线用户</a></li>
             </ul>
           </li>
+		  	<li class="<?php echo checkIfActive('kmlist,search')?>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cloud"></span> 卡密管理<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="./kmlist.php">卡密列表</a></li>
+			  <li><a href="./search.php">搜索卡密</a></li>
+            </ul>
+          </li>
 		  <!--li class="<?php echo checkIfActive('fwqlist,addfwq')?>">
            <a href="../app_api/admin.php"><span class="glyphicon glyphicon-book"></span> 云端APP管理</a>
           </li-->
-		  <li class="<?php echo checkIfActive('kmlist,search')?>">
+		  <li class="<?php echo checkIfActive('list_line,add_line,add_gg,list_gg,AdminShengji,qq_admin')?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cloud"></span> 云端APP管理<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="./list_line.php">线路列表</a></li>
@@ -46,9 +53,6 @@
 			  <li><a href="./qq_admin.php">客服QQ</a></li>
             </ul>
           </li>
-		  <!--li class="<?php echo checkIfActive('daili,dlconfig,dlkm')?>">
-            <a href="./dlconfig.php"><span class="glyphicon glyphicon-book"></span> 用户公告</a>
-          </li-->
 		  <li class="<?php echo checkIfActive('kmlist,search,dlconfig')?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cloud"></span> 高级设置<b class="caret"></b></a>
             <ul class="dropdown-menu">

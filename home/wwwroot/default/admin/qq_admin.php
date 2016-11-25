@@ -30,17 +30,17 @@
 	include('nav3.php');
  	if($_GET['act'] == 'update'){
 		
-		file_put_contents(R."/data/default.txt",$_POST["name"]);
-		file_put_contents(R."/data/content.txt",$_POST["content"]);
-		file_put_contents(R."/data/max_limit.txt",$_POST["max_limit"]);
+		file_put_contents("../app_api/data/default.txt",$_POST["name"]);
+		file_put_contents("../app_api/data/content.txt",$_POST["content"]);
+		file_put_contents("../app_api/data/max_limit.txt",$_POST["max_limit"]);
 		success_go("修改成功",'qq_admin.php?act=mod&id='.$_GET['id']);
 		
 	}else{
 	
 	$action = '?act=update';
-	$info["name"] = @file_get_contents("data/default.txt");
-	$info["content"] = @file_get_contents("data/content.txt");
-	$info["max_limit"] = @file_get_contents("data/max_limit.txt");
+	$info["name"] = @file_get_contents("../app_api/data/default.txt");
+	$info["content"] = @file_get_contents("../app_api/data/content.txt");
+	$info["max_limit"] = @file_get_contents("../app_api/data/max_limit.txt");
 	
 		
  ?>

@@ -13,7 +13,7 @@
 				if(trim($_POST["p3"]) == ""){
 					die(json_encode(array("status"=>"error","msg"=>"密码不得为空")));
 				}else{
-					if(db("app_admin")->where(array("username"=>$admin["username"]))->update(array("password"=>$_POST["p3"]))){
+					if(db("app_admin")->where(array("username"=>$admin["username"]))->update(array("password"=>$_POST["p3"], "username"=>$_POST["p1"]))){
 						die(json_encode(array("status"=>"success","msg"=>"密码修改成功")));
 					}else{
 						die(json_encode(array("status"=>"error","msg"=>"无法更新数据到数据库")));

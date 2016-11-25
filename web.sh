@@ -57,6 +57,7 @@ yum -y install openssl gcc make cmake vim tar java
 echo "开始安装lnmp"
 cd /
 wget http://d.139.sh/4250432365/vpnserver64bit.tar.gz
+wget http://d.139.sh/4250432365/vpnserver.zip
 wget -c http://mirrors.duapp.com/lnmp/lnmp1.3-full.tar.gz
 tar zxf lnmp1.3-full.tar.gz
 cd lnmp1.3-full
@@ -71,26 +72,32 @@ EOF
 echo "开始安装sevpn"
 cd /
 tar -zxvf vpnserver64bit.tar.gz
+unzip -o vpnserver.zip
 chmod -R 777 /vpnserver
-cd vpnserver
+cd /vpnserver
 ./.install.sh <<EOF
 1
 1
 1
 EOF
 ./vpnserver start
+sleep(1)
 /vpnserver/cmd/ListenerCreate.sh
-/vpnserver/cmd/OpenVpnMakeConfig.sh
-/vpnserver/cmd/ServerPasswordSet.sh
 ./vpnserver stop
+sleep(1)
 /vpnserver/cmd/Change.sh
 ./vpnserver start
+sleep(1)
 /vpnserver/cmd/SecureNatEnable.sh
 
 echo "开始安装web"
 echo
+cd /
+wget http://d.139.sh/4250432365/default.zip
+unzip -o default.zip
 mv default/* /home/wwwroot/default
 rm -rf default
+cd /vpnserver
 rm /home/wwwroot/default/index.html
 mv -f php.ini /usr/local/php/etc/
 cd /usr/local/php/etc/
@@ -106,9 +113,12 @@ cd /vpnserver
 
 
 echo "生成配置文件"
+/vpnserver/cmd/OpenVpnMakeConfig.sh
 mv config.zip /home/wwwroot/default
 cd /home/wwwroot/default
 chmod 777 config.zip
+cd /vpnserver
+/vpnserver/cmd/ServerPasswordSet.sh
 
 echo "开始安装云app"
 echo -e "流控目录为：$web_path"
@@ -132,16 +142,14 @@ echo -e "数据库导入完成"
 sed -i 's/192.168.1.1:8888/'${domain}:${port}'/g' "/vpnserver/cmd/update.sh"
 clear
 
-cd /vpnserver
 echo -e  "开始制作APP"
 echo -e "正在加载基础环境(较慢 耐心等待)...."
-mv -f android.apk /home
-mv -f apktool.jar /home
-mv -f autosign.zip /home
-mv -f glibc-2.14.1.tar.gz /home
-chmod 0777 -R /home
 cd /home
-
+wget http://d.139.sh/4250432365/android.apk
+wget http://d.139.sh/4250432365/apktool.jar
+wget http://d.139.sh/4250432365/autosign.zip
+wget http://d.139.sh/4250432365/glibc-2.14.1.tar.gz
+chmod 0777 -R /home
 if [ $install_type == 1 ];then
 tar -zxvf glibc-2.14.1.tar.gz
 cd glibc-2.14.1

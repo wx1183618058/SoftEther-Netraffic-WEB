@@ -41,16 +41,13 @@ if($_GET["version"] == "2"){
 		$db = db('top');
 		$u = $db->where(array('username'=>$username,'time'=>date('Y-m-d',time())))->find();
 		if($u){
-			if($u['data2'] > $c){
-				$db->where(array('id'=>$u['id']))->update(array('data2'=>0));
-			}
 				$new = $c-$u['data2']+$u['data'];
 				$db->where(array('id'=>$u['id']))->update(array('data2'=>$c));
 				$db->where(array('id'=>$u['id']))->update(array('data'=>$new));
 			
 		}else{
 			//print_r($u);
-			$db->insert(array('username'=>$username,'data'=>$c,'time'=>date('Y-m-d',time())));
+			$db->insert(array('username'=>$username,'data'=>0,'data2'=>$c,'time'=>date('Y-m-d',time())));
 		}
 	}else{
 		echo "没有这个用户";

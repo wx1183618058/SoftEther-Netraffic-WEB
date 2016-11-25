@@ -32,7 +32,7 @@ if(isset($_GET['id'])){
 <div class="table-responsive">
 <table class="table table-bordered">
    <thead>
-		<thead><tr><th>ID</th><th>用户名</th><th>上传流量</th><th>下载流量</th><th>协议</th><th>操作</th></tr></thead>
+		<thead><tr><th>ID</th><th>用户名</th><th>上传流量</th><th>下载流量</th><th>协议</th><th>登陆数</th><th>操作</th></tr></thead>
          <tbody>
 <?php
 
@@ -45,7 +45,7 @@ fgets($fp);
 fgets($fp);
 //在线列表代码
 $j=0;
-$rs=$DB->query("SELECT * FROM `openvpn` WHERE `online`='1'");
+$rs=$DB->query("SELECT * FROM `openvpn` WHERE `online`<>'0'");
 while($res = $DB->fetch($rs))
 { 
 $j+=1;
@@ -56,6 +56,7 @@ $j+=1;
 <td><?=round($res['osent']/1024/1024)?>M</td>
 <td><?=round($res['orecv']/1024/1024)?>M</td>
 <td><?=$res['mode']?></td>
+<td><?=$res['online']?></td>
 <td><a href="./online.php?my1=del1&sid=<?=$res['sid']?>" class="btn btn-xs btn-danger" onclick="if(!confirm('你确实要断开此用户吗？')){return false;}">断开</a></td>
 </tr>
 <?php }
