@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-11-21 03:54:49
+-- Generation Time: 2016-11-27 11:51:25
 -- 服务器版本： 5.5.48-log
 -- PHP Version: 5.4.45
 
@@ -213,23 +213,6 @@ CREATE TABLE IF NOT EXISTS `auth_log` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `line`
---
-
-CREATE TABLE IF NOT EXISTS `line` (
-  `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `content` text NOT NULL,
-  `type` text NOT NULL,
-  `group` text NOT NULL,
-  `show` int(11) NOT NULL,
-  `label` text NOT NULL,
-  `time` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `line_grop`
 --
 
@@ -363,12 +346,6 @@ ALTER TABLE `auth_log`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `line`
---
-ALTER TABLE `line`
-  ADD UNIQUE KEY `id` (`id`);
-
---
 -- Indexes for table `line_grop`
 --
 ALTER TABLE `line_grop`
@@ -437,11 +414,6 @@ ALTER TABLE `auth_kms`
 -- AUTO_INCREMENT for table `auth_log`
 --
 ALTER TABLE `auth_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `line`
---
-ALTER TABLE `line`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `line_grop`

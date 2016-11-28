@@ -38,8 +38,7 @@
 	if($require != true){
 		die(json_encode($data));
 	}';
-		file_put_contents("../app_api/shengji.php",$content);
-		file_put_contents("/shengji.php",$content);
+		file_put_contents(R."/shengji.php",$content);
 		success_go("修改成功",'AdminShengji.php?act=mod&id='.$_GET['id']);
 		
 	}else{

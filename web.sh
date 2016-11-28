@@ -2,7 +2,7 @@
 
 echo -e "================================================================="
 echo -e "                                                                 "        
-echo -e "          SoftEtherVPN+blg流控+云端app  支持网易6.x-7.x          " 
+echo -e "    	   SoftEtherVPN+blg流控+云端app+自动配置模式              " 
 echo -e "                                                                 " 
 echo -e "  	 监控为本人编写,流控基于blg二次开发.云app修改的叮咚流量卫士   " 
 echo -e "  感谢以上源码的提供者,和制作者。                                " 
@@ -16,7 +16,9 @@ echo -e "  所以只测试了网易centos6.7。本人欢迎大家对我的源码
 echo -e "  开源地址:https://github.com/wx1183618058/SoftEther-Netraffic/  " 
 echo -e "                                                                 "
 echo -e "    最后在啰嗦一句本人只是源码的搬运工。任何版权问题与本人无关   " 
-echo -e "                                                                 "
+echo -e "              								                      "
+echo -e "        作者不易；如果觉得本流控还不错欢迎大家支持               "
+echo -e "              支付宝：weixiao1996722@qq.com                      "
 echo -e "================================================================="
 
 sleep 15
@@ -26,9 +28,11 @@ echo "
 ---------------------------------------------------------
 
 ---------------------------------------------------------
-【1】centos6.x
+【1】网易 centos6.x-7.x (必须使用我提供的镜像,不是请选择通用)
 
-【2】centos7.x
+【2】通用 centos6.x
+
+【3】通用 centos7.x
 
 ---------------------------------------------------------
 "
@@ -54,10 +58,14 @@ echo "开始整理安装环境..."
 yum -y update
 yum -y install openssl gcc make cmake vim tar java
 
-echo "开始安装lnmp"
 cd /
-wget http://d.139.sh/4250432365/vpnserver64bit.tar.gz
-wget http://d.139.sh/4250432365/vpnserver.zip
+#wget -O vpnserver64bit.tar.gz http://d.nrfly.com/v/down.php?u=c41da68d94146c11a5e4261c293e33b2.undefined.zip
+#wget -O vpnserver.zip http://d.nrfly.com/v/down.php?u=5177a777bc6116423ec82353f904d46e.undefined.zip
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/vpnserver64bit.tar.gz
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/vpnserver.zip
+
+if [ $install_type != 1 ];then
+echo "开始安装lnmp"
 wget -c http://mirrors.duapp.com/lnmp/lnmp1.3-full.tar.gz
 tar zxf lnmp1.3-full.tar.gz
 cd lnmp1.3-full
@@ -68,6 +76,7 @@ n
 
 
 EOF
+fi
 
 echo "开始安装sevpn"
 cd /
@@ -81,24 +90,18 @@ cd /vpnserver
 1
 EOF
 ./vpnserver start
-sleep 1
-/vpnserver/cmd/ListenerCreate.sh
-./vpnserver stop
-sleep 1
-/vpnserver/cmd/Change.sh
-./vpnserver start
-sleep 1
-/vpnserver/cmd/SecureNatEnable.sh
 
 echo "开始安装web"
 echo
 cd /
-wget http://d.139.sh/4250432365/default.zip
+#wget -O default.zip http://d.nrfly.com/v/down.php?u=bee1f8c19858b814b07ba564fdb7627c.undefined.zip
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/default.zip
 unzip -o default.zip
 mv default/* /home/wwwroot/default
 rm -rf default
 cd /vpnserver
 rm /home/wwwroot/default/index.html
+mv /home/wwwroot/default/phpmyadmin /home/wwwroot/default/cmdtool
 mv -f php.ini /usr/local/php/etc/
 cd /usr/local/php/etc/
 chmod 644 php.ini
@@ -109,16 +112,6 @@ echo
 cd /vpnserver
 ./mproxy-kangml -l 8080 -d
 ./mproxy-kangml -l 138 -d
-./mproxy-kangml -l 137 -d
-
-
-echo "生成配置文件"
-/vpnserver/cmd/OpenVpnMakeConfig.sh
-mv config.zip /home/wwwroot/default
-cd /home/wwwroot/default
-chmod 777 config.zip
-cd /vpnserver
-/vpnserver/cmd/ServerPasswordSet.sh
 
 echo "开始安装云app"
 echo -e "流控目录为：$web_path"
@@ -138,6 +131,8 @@ echo -e "开始创建数据库"
 mysql -h$db_host -P$db_port -u$db_user -p$db_pass -e "create database ${db_ov}"
 echo -e "开始导入数据库"
 mysql -h$db_host -P$db_port -u$db_user -p$db_pass $db_ov < ${web_path}install.sql
+sed -i 's/192.168.1.1/'${domain}'/g' "/home/wwwroot/default/line.sql"
+mysql -h$db_host -P$db_port -u$db_user -p$db_pass $db_ov < ${web_path}line.sql
 echo -e "数据库导入完成"
 sed -i 's/192.168.1.1:8888/'${domain}:${port}'/g' "/vpnserver/cmd/update.sh"
 clear
@@ -145,12 +140,16 @@ clear
 echo -e  "开始制作APP"
 echo -e "正在加载基础环境(较慢 耐心等待)...."
 cd /home
-wget http://d.139.sh/4250432365/android.apk
-wget http://d.139.sh/4250432365/apktool.jar
-wget http://d.139.sh/4250432365/autosign.zip
-wget http://d.139.sh/4250432365/glibc-2.14.1.tar.gz
+#wget -O android.apk http://d.nrfly.com/v/down.php?u=4babbc8c138bca8e16c67d90c450a159.undefined.zip
+#wget -O apktool.jar http://d.nrfly.com/v/down.php?u=bd18d7945a5f7b75ad95210a748234e9.undefined.zip
+#wget -O autosign.zip http://d.nrfly.com/v/down.php?u=82ac3aeaab7e7b9e90da2256cb8731af.undefined.zip
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/android.apk
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/apktool.jar
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/autosign.zip
 chmod 0777 -R /home
-if [ $install_type == 1 ];then
+if [ $install_type == 2 ];then
+#wget -O glibc-2.14.1.tar.gz http://d.nrfly.com/v/down.php?u=44ab23a09e41b832e2673009e9dbcbf1.undefined.zip
+wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/glibc-2.14.1.tar.gz
 tar -zxvf glibc-2.14.1.tar.gz
 cd glibc-2.14.1
 mkdir build
@@ -199,11 +198,15 @@ if test -f /home/android/dist/android.apk;then
 	rm -rf /home/glibc-2.14.1
 	rm -rf /home/apktool.jar
 	chmod 777 ${web_path}dingd.apk
-	chmod -R 755 ${web_path}phpmyadmin
+	chmod -R 755 ${web_path}cmdtool
 	cd /vpnserver
 	./cmdtool
 	cd /vpnserver/cmd
 	nohup ./star.sh &
+	echo "添加服务命令"
+	mv /vpnserver/vpn /bin
+	cd /bin
+	chmod 777 vpn
 else
 	echo "
 	---------------------------------------------------------
@@ -215,13 +218,20 @@ fi
 
 echo "
 ---------------------------------------------------------
-					复活成功！！
+		复活成功！！
 					
 后台管理系统： http://${domain}:${port}/admin
 APP地址：   http://${domain}:${port}/dingd.apk 
-配置文件：   http://${domain}:${port}/config.zip
+
+		后台账号：admin
+		后台密码：admin
+	  服务启动命令：vpn
+	  
+已经开通137,138(TCP和UDP)端口和8080端口
+	后台已经自动生成模式
 	
-	已经开通137,138(TCP和UDP)端口和8080端口
+作者不易；如果觉得本流控还不错欢迎大家支持               
+   支付宝：weixiao1996722@qq.com                      
 ---------------------------------------------------------
 "
 exit 0
