@@ -60,13 +60,89 @@ exit;
 
  ?>
       <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">代理页面管理</h3></div>
+        <div class="panel-body">
+          <form action="./dlconfig.php" method="post" class="form-horizontal" role="form">
+            <div class="form-group">
+            	<input type="hidden" name="my" value="config"/>
+              <label class="col-sm-2 control-label">代理公告</label><br>
+			<div class="col-sm-10"><textarea class="form-control" name="gongg" rows="5" cols="50" required><?php echo $gongg;?></textarea></div>
+            </div>
             <div class="form-group">
             	<input type="hidden" name="my" value="config"/>
               <label class="col-sm-2 control-label">用户公告</label><br>
-			<div class="col-sm-10"><textarea class="form-control" name="gonggs" rows="30" cols="50" required><?php echo $gonggs;?></textarea></div>
-            </div> 
+			<div class="col-sm-10"><textarea class="form-control" name="gonggs" rows="5" cols="50" required><?php echo $gonggs;?></textarea></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">开放注册</label><br>
+                <div class="col-sm-10"><select name="rk" class="form-control">
+                <?php 
+					if($regok==1){
+						echo '<option value="0">开放注册</option><option value="1" selected="selected">关闭开放注册</option>';
+					}else{echo '<option value="0" selected="selected">开放注册</option><option value="1" >关闭开放注册</option>';}
+                ?>
+              </select></div>
+            </div>
+			<div class="form-group">
+            <label class="col-sm-2 control-label">注册默认开通</label><br>
+                 <div class="col-sm-10"><select name="ak" class="form-control">
+                  <?php 
+					if($activeok==1){
+						echo ' <option value="0">默认开通账号</option><option value="1" selected="selected">默认关闭账号</option>';
+					}else{ echo ' <option value="0" selected="selected" >默认开通账号</option><option value="1" >默认关闭账号</option>';}
+                  ?>
+              </select></div>
+			 </div>
+			 <div class="form-group">
+             <label class="col-sm-2 control-label">普通代理价格</label>
+             	<div class="col-sm-2">时间(元/天):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dl0" value="<?php echo $dl0;?>"/></div>
+             	<div class="col-sm-2">流量(元/GB):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dls0" value="<?php echo $dls0;?>"/></div>
+			 </div>
+			 <div class="form-group">
+             <label class="col-sm-2 control-label">铜牌代理价格</label>
+             	<div class="col-sm-2">时间(元/天):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dl1" value="<?php echo $dl1;?>"/></div>
+             	<div class="col-sm-2">流量(元/GB):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dls1" value="<?php echo $dls1;?>"/></div>
+			 </div>
+			 <div class="form-group">
+             <label class="col-sm-2 control-label">银牌代理价格</label>
+             	<div class="col-sm-2">时间(元/天):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dl2" value="<?php echo $dl2;?>"/></div>
+             	<div class="col-sm-2">流量(元/GB):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dls2" value="<?php echo $dls2;?>"/></div>
+			 </div>
+			 <div class="form-group">
+             <label class="col-sm-2 control-label">金牌代理价格</label>
+             	<div class="col-sm-2">时间(元/天):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dl3" value="<?php echo $dl3;?>"/></div>
+             	<div class="col-sm-2">流量(元/GB):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dls3" value="<?php echo $dls3;?>"/></div>
+			 </div>
+			 <div class="form-group">
+             <label class="col-sm-2 control-label">钻石代理价格</label>
+             	<div class="col-sm-2">时间(元/天):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dl4" value="<?php echo $dl4;?>"/></div>
+             	<div class="col-sm-2">流量(元/GB):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dls4" value="<?php echo $dls4;?>"/></div>
+			 </div>
+			 <div class="form-group">
+             <label class="col-sm-2 control-label">至尊代理价格</label>
+             	<div class="col-sm-2">时间(元/天):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dl5" value="<?php echo $dl5;?>"/></div>
+             	<div class="col-sm-2">流量(元/GB):</div>
+				<div class="col-sm-3"><input type="text" class="form-control" name="dls5" value="<?php echo $dls5;?>"/></div>
+			 </div>
+            <input type="submit" value="保存" class="btn btn-primary form-control"/>
+          </form>
+           <div class="table-responsive">
         <table class="table table-striped">
 </table>
+        </div>
+		<div class="panel-footer">
+          <span class="glyphicon glyphicon-info-sign"></span> 管理员在这里可以管理代理页面的公告和代理拿货价格。
         </div>
       </div>
     </div>

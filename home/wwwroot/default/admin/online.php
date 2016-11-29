@@ -1,7 +1,7 @@
 <?php
 $mod='blank';
 include("../api.inc.php");
-$title='当前在线用户';
+$title='在线用户';
 include './head.php';
 if($islogin2==1){}else exit("<script language='javascript'>window.location.href='./login.php';</script>");
 include './nav.php';

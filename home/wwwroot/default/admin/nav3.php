@@ -50,6 +50,14 @@ function checkIfActive($string) {
 			  <li><a href="./search.php">搜索卡密</a></li>
             </ul>
           </li>
+	  		  <li class="<?php echo checkIfActive('daili,dlconfig,dlkm')?>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> 代理管理<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="./daili.php">代理用户管理</a></li>
+			  <li><a href="./dlconfig.php">代理页面管理</a></li>
+              <li ><a href="./dlkm.php">代理卡密管理</a></li>
+            </ul>
+          </li>
 		  <!--li class="<?php echo checkIfActive('fwqlist,addfwq')?>">
            <a href="../app_api/admin.php"><span class="glyphicon glyphicon-book"></span> 云端APP管理</a>
           </li-->
@@ -67,11 +75,10 @@ function checkIfActive($string) {
 		  <!--li class="<?php echo checkIfActive('daili,dlconfig,dlkm')?>">
             <a href="./dlconfig.php"><span class="glyphicon glyphicon-book"></span> 用户公告</a>
           </li-->
-		  <li class="<?php echo checkIfActive('user,dlconfig,count')?>">
+		  <li class="<?php echo checkIfActive('user,count')?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cloud"></span> 高级设置<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="./user.php">管理员设置</a></li>
-			  <li><a href="./dlconfig.php">用户公告</a></li>
 			  <li><a href="./count.php">使用统计</a></li>
             </ul>
           </li>

@@ -29,7 +29,7 @@
  	include('head.php');
 	include('nav3.php'); 
 	$require = true;
-	include("shengji.php");
+	include("../app_api/shengji.php");
  	if($_GET['act'] == 'update'){
 		$content = '<?php	$data["status"] = "success";
 	$data["versionCode"] = "'.$_POST["versionCode"].'";//请在此输入新的版本号 当版本号大于用户正在使用的版本时 将会提示升级
@@ -38,7 +38,7 @@
 	if($require != true){
 		die(json_encode($data));
 	}';
-		file_put_contents(R."/shengji.php",$content);
+		file_put_contents("../app_api/shengji.php",$content);
 		success_go("修改成功",'AdminShengji.php?act=mod&id='.$_GET['id']);
 		
 	}else{

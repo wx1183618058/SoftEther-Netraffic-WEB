@@ -158,6 +158,13 @@ CREATE TABLE IF NOT EXISTS `auth_config` (
   `ok` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `auth_config`
+--
+
+INSERT INTO `auth_config` (`id`, `gg`, `ggs`, `dl1`, `dl2`, `dl3`, `dl4`, `dl5`, `dl0`, `dls1`, `dls2`, `dls3`, `dls4`, `dls5`, `dls0`, `regok`, `activeok`, `ok`) VALUES
+('1', '231123546', '31222222', 3, 0.01, 2.5, 2, 1.5, 7, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --

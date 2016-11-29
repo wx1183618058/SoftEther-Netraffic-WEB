@@ -83,8 +83,8 @@ include './head.php';
             </div><br/>
             <div class="form-group">
               <div class="col-xs-4"><input type="submit" value="注册" class="btn btn-primary form-control"/></div>
-              <div class="col-xs-4"></div>
               <div class="col-xs-4"><a href="login.php" class="btn btn-info form-control"/>登陆</a></div>
+              <div class="col-xs-4"><a href="../daili/" class="btn btn-info form-control"/>代理中心</a></div>
             </div>
           </form>
         </div>
