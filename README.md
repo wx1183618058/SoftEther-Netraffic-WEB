@@ -11,6 +11,10 @@ SoftEther WEB端BLG流控
 ###使用方法
 > 先安装lnmp,接着把流控放对应目录，打开流控监控。 
 
+###负载版
+> load下是负载版WEB
+> /load/home/wwwroot/default/shell.php 需要放入对应的成员服务器中
+
 ###一键脚本
 注：不一定是最新版，如果需要可自行同步源码
 
