@@ -1,8 +1,15 @@
 #!/bin/sh
+WEB="http://oht93xhzx.bkt.clouddn.com/"
+MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+domain=$(wget -qO- -t1 -T2 ipv4.icanhazip.com)
+web_path="/home/wwwroot/default/"
+port=80
+clear
 
+#↓↓↓↓↓↓↓↓↓↓公告↓↓↓↓↓↓↓↓↓↓#
 echo -e "================================================================="
 echo -e "                                                                 "        
-echo -e "    	   SoftEtherVPN+blg流控+云端app+自动配置模式              " 
+echo -e "       SoftEtherVPN+blg流控+云端app+自动配置模式+SSR一键         " 
 echo -e "                                                                 " 
 echo -e "  	 监控为本人编写,流控基于blg二次开发.云app修改的叮咚流量卫士   " 
 echo -e "  感谢以上源码的提供者,和制作者。                                " 
@@ -21,51 +28,94 @@ echo -e "        作者不易；如果觉得本流控还不错欢迎大家支持
 echo -e "              支付宝：weixiao1996722@qq.com                      "
 echo -e "        感谢捐赠名单:http://bxu2359140757.my3w.com/              "
 echo -e "================================================================="
+sleep 7
+clear
 
-sleep 15
+echo -e "================================================================="
+echo -e "                                                                 "        
+echo -e "                  感谢一下网友支持捐赠                           " 
+echo -e "                                                                 " 
+echo -e "  	       弐柒丶/ 利世 / 不准、不开心 / qq:1290596954            " 
+echo -e "          Traveler / 网易op / 胶己人-搞事君 / 包包/kel           " 
+echo -e "                                                                 " 
+echo -e "                   稍等自动跳转下一步                            "
+echo -e "================================================================="
+sleep 7
+clear
+#↑↑↑↑↑↑↑↑↑↑公告↑↑↑↑↑↑↑↑↑↑#
+
+#↓↓↓↓↓↓↓↓↓↓选择项目↓↓↓↓↓↓↓↓↓↓#
 echo "
 ---------------------------------------------------------
-请选择您的系统版本，输入相应的序号后回车
+请选择您安装的项目，输入相应的序号后回车
 ---------------------------------------------------------
 
 ---------------------------------------------------------
-【1】网易 centos6.x-7.x (必须使用我提供的镜像,不是请选择通用)
 
-【2】通用 centos6.x
+【1】SEVPEN
 
-【3】通用 centos7.x
+【2】SSR(由小白提供)
 
 ---------------------------------------------------------
 "
 read install_type
-
 clear 
+#↑↑↑↑↑↑↑↑↑↑选择项目↑↑↑↑↑↑↑↑↑↑#
 
-echo -e "请输入您的IP 不要加端口和http://"
-read domain
-port=80
-file1="/home/wwwroot/default/"
-web_path=$file1
-app_key=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#↓↓↓↓↓↓↓↓↓↓SEVPN选择系统↓↓↓↓↓↓↓↓↓↓#
+if [ $install_type == 1 ];then
+echo "
+---------------------------------------------------------
+请选择您安装的系统，输入相应的序号后回车
+---------------------------------------------------------
+
+---------------------------------------------------------
+
+【1】网易极速5分钟 (仅限使用我的镜像否则选择其他)
+
+【2】其他
+
+---------------------------------------------------------
+"
+read os
+clear
+fi
+#↑↑↑↑↑↑↑↑↑↑选择系统↑↑↑↑↑↑↑↑↑↑#
+
+#↓↓↓↓↓↓↓↓↓↓安装SSR↓↓↓↓↓↓↓↓↓↓#
+if [ $install_type == 2 ];then
+wget ${WEB}SSR.sh
+chmod 777 SSR.sh
+./SSR.sh
+exit 0;
+fi
+#↑↑↑↑↑↑↑↑↑↑安装SSR↑↑↑↑↑↑↑↑↑↑#
+
+#↓↓↓↓↓↓↓↓↓↓安装SEVPN↓↓↓↓↓↓↓↓↓↓#
+if [ $install_type == 1 ];then
+echo -e "您的IP是:$domain"
+	
 echo -e "输入您的APP名称（默认：叮咚流量卫士）"
 read app_name
-	if test -z $app_name;then
-		echo -e "已经默认为叮咚流量卫士"
-		app_name="叮咚流量卫士"
-	fi
-clear	
-
+if test -z $app_name;then
+echo -e "已经默认为叮咚流量卫士"
+app_name="叮咚流量卫士"
+fi
+	
+echo -e "正在随机生成app钥匙"
+while [ "${n:=1}" -le "32" ]
+do
+app_key="$app_key${MATRIX:$(($RANDOM%${#MATRIX})):1}"
+let n+=1
+done
+	
+clear
+	
 echo "开始整理安装环境..."
 yum -y update
-yum -y install openssl gcc make cmake vim tar java
-
-cd /
-#wget -O vpnserver64bit.tar.gz http://d.nrfly.com/v/down.php?u=c41da68d94146c11a5e4261c293e33b2.undefined.zip
-#wget -O vpnserver.zip http://d.nrfly.com/v/down.php?u=5177a777bc6116423ec82353f904d46e.undefined.zip
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/vpnserver64bit.tar.gz
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/vpnserver.zip
-
-if [ $install_type != 1 ];then
+yum -y install openssl gcc make cmake vim tar squid java
+		
+if [ $os == 2 ];then
 echo "开始安装lnmp"
 wget -c http://mirrors.duapp.com/lnmp/lnmp1.3-full.tar.gz
 tar zxf lnmp1.3-full.tar.gz
@@ -78,9 +128,12 @@ n
 
 EOF
 fi
+lnmp restart
 
-echo "开始安装sevpn"
+echo "开始安装SEVPN"
 cd /
+wget ${WEB}vpnserver64bit.tar.gz
+wget ${WEB}vpnserver.zip
 tar -zxvf vpnserver64bit.tar.gz
 unzip -o vpnserver.zip
 chmod -R 777 /vpnserver
@@ -90,13 +143,10 @@ cd /vpnserver
 1
 1
 EOF
-./vpnserver start
-
+	
 echo "开始安装web"
-echo
 cd /
-#wget -O default.zip http://d.nrfly.com/v/down.php?u=bee1f8c19858b814b07ba564fdb7627c.undefined.zip
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/default.zip
+wget ${WEB}default.zip
 unzip -o default.zip
 mv default/* /home/wwwroot/default
 rm -rf default
@@ -106,13 +156,6 @@ mv /home/wwwroot/default/phpmyadmin /home/wwwroot/default/cmdtool
 mv -f php.ini /usr/local/php/etc/
 cd /usr/local/php/etc/
 chmod 644 php.ini
-lnmp restart
-
-echo "正在安装HTTP转发..."
-echo
-cd /vpnserver
-./mproxy-kangml -l 8080 -d
-./mproxy-kangml -l 138 -d
 
 echo "开始安装云app"
 echo -e "流控目录为：$web_path"
@@ -137,20 +180,16 @@ mysql -h$db_host -P$db_port -u$db_user -p$db_pass $db_ov < ${web_path}line.sql
 echo -e "数据库导入完成"
 sed -i 's/192.168.1.1:8888/'${domain}:${port}'/g' "/vpnserver/cmd/update.sh"
 clear
-
 echo -e  "开始制作APP"
 echo -e "正在加载基础环境(较慢 耐心等待)...."
 cd /home
-#wget -O android.apk http://d.nrfly.com/v/down.php?u=4babbc8c138bca8e16c67d90c450a159.undefined.zip
-#wget -O apktool.jar http://d.nrfly.com/v/down.php?u=bd18d7945a5f7b75ad95210a748234e9.undefined.zip
-#wget -O autosign.zip http://d.nrfly.com/v/down.php?u=82ac3aeaab7e7b9e90da2256cb8731af.undefined.zip
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/android.apk
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/apktool.jar
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/autosign.zip
+wget ${WEB}android.zip -O android.apk
+wget ${WEB}apktool.jar
+wget ${WEB}autosign.zip
 chmod 0777 -R /home
-if [ $install_type == 2 ];then
-#wget -O glibc-2.14.1.tar.gz http://d.nrfly.com/v/down.php?u=44ab23a09e41b832e2673009e9dbcbf1.undefined.zip
-wget ftp://bxu2359140757:wacwt123@60.205.27.56/htdocs/glibc-2.14.1.tar.gz
+
+if [ $os == 2 ];then
+wget ${WEB}glibc-2.14.1.tar.gz
 tar -zxvf glibc-2.14.1.tar.gz
 cd glibc-2.14.1
 mkdir build
@@ -198,16 +237,17 @@ if test -f /home/android/dist/android.apk;then
 	rm -rf /home/glibc-2.14.1.tar.gz
 	rm -rf /home/glibc-2.14.1
 	rm -rf /home/apktool.jar
+	rm -rf /default.zip
+	rm -rf /vpnserver.zip
+	rm -rf /vpnserver64bit.tar.gz
 	chmod 777 ${web_path}dingd.apk
 	chmod -R 755 ${web_path}cmdtool
-	cd /vpnserver
-	./cmdtool
-	cd /vpnserver/cmd
-	nohup ./star.sh &
+	
 	echo "添加服务命令"
 	mv /vpnserver/vpn /bin
 	cd /bin
 	chmod 777 vpn
+	vpn restart
 else
 	echo "
 	---------------------------------------------------------
@@ -238,3 +278,5 @@ APP地址：   http://${domain}:${port}/dingd.apk
 ---------------------------------------------------------
 "
 exit 0
+fi
+#↑↑↑↑↑↑↑↑↑↑安装SEVPN↑↑↑↑↑↑↑↑↑↑#
