@@ -94,7 +94,10 @@ fi
 #↓↓↓↓↓↓↓↓↓↓安装SEVPN↓↓↓↓↓↓↓↓↓↓#
 if [ $install_type == 1 ];then
 echo -e "您的IP是:$domain"
-	
+if test -z $domain;then
+echo -e "获取ip失败,请手动输入"
+read domain
+fi	
 echo -e "输入您的APP名称（默认：叮咚流量卫士）"
 read app_name
 if test -z $app_name;then
