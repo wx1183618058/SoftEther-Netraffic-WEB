@@ -12,6 +12,7 @@ SoftEther WEB端流控
 > 先安装lnmp。
 > 导入ov数据库
 > 接着把web放入对应目录。 
+> 一键获取地址 QQ:417477291
 
 ![image](https://github.com/wx1183618058/SoftEther-Netraffic-WEB/blob/master/1.png)
 ![image](https://github.com/wx1183618058/SoftEther-Netraffic-WEB/blob/master/2.jpg)
